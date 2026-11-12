@@ -567,3 +567,6 @@ html,body{overflow-x:clip}
 .pills{gap:10px}
 .pill{padding:12px 18px;font-size:1rem}
 .foot-brand a[href^="mailto"]{word-break:break-all}
+.hero-v2 .btn-row{flex-wrap:nowrap;gap:12px}
+.hero-v2 .btn-row .btn{padding:12px 20px;font-size:.93rem}
+@media (max-width:420px){.hero-v2 .btn-row{flex-wrap:wrap}}
