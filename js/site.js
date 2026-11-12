@@ -73,6 +73,17 @@
     });
   }
 
+  // --- newsletter: opens the visitor's mail app with a subscribe request ---
+  var news = document.getElementById("news-form");
+  if (news) {
+    news.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var em = news.querySelector("[name=email]").value.trim().slice(0, 160);
+      location.href = "mailto:" + news.getAttribute("data-to") + "?subject=" + encodeURIComponent("Newsletter subscription") +
+        "&body=" + encodeURIComponent("Please add me to the Modvanta newsletter: " + em);
+    });
+  }
+
   // --- contact form: opens the visitor's mail app, nothing is sent to a server ---
   var form = document.getElementById("contact-form");
   if (form) {
