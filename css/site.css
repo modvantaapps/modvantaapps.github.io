@@ -705,3 +705,22 @@ html,body{overflow-x:clip}
 .career-callout h2{font-size:1.15rem;margin:0}.career-callout p{font-size:.78rem;margin:2px 0 0}.career-callout .btn{margin-left:auto}
 .grid .card{border-radius:13px;border-color:#e1e8fa}
 @media(max-width:760px){.feature-head-grid{grid-template-columns:1fr}.feature-head-grid .landing-art{height:125px}.article-layout,.quote-layout,.contact-layout{grid-template-columns:1fr}.career-callout{flex-wrap:wrap}.career-callout .btn{margin-left:0}}
+.banner-art{overflow:hidden;border-radius:18px;background:transparent}
+.banner-art img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.landing-hero .banner-art{height:230px;margin:-10px -22px -12px 0}
+.landing-hero .banner-art img{object-position:center}
+.feature-head.has-banner{min-height:300px;background-color:#f4f7ff;background-size:cover;background-position:center}
+.feature-head.apps-banner{background-image:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.91) 44%,rgba(255,255,255,.08) 100%),url('/img/banners/apps.webp')}
+.feature-head.blog-banner{background-image:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.91) 44%,rgba(255,255,255,.08) 100%),url('/img/banners/blog.webp')}
+.feature-head.quote-banner{background-image:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.91) 44%,rgba(255,255,255,.08) 100%),url('/img/banners/quote.webp')}
+.feature-head.has-banner .container{position:relative;z-index:1;min-height:inherit}
+.feature-head.has-banner .lead{max-width:460px}
+@media(max-width:760px){.landing-hero .banner-art{height:170px;margin:0}.feature-head.has-banner{min-height:245px;background-position:60% center}.feature-head.apps-banner,.feature-head.blog-banner,.feature-head.quote-banner{background-image:linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,255,255,.82)),var(--banner-image)}.feature-head.apps-banner{--banner-image:url('/img/banners/apps.webp')}.feature-head.blog-banner{--banner-image:url('/img/banners/blog.webp')}.feature-head.quote-banner{--banner-image:url('/img/banners/quote.webp')}}
+.feature-head.contact-banner{background-image:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.9) 45%,rgba(255,255,255,.08) 100%),url('/img/banners/contact.webp');background-size:cover;background-position:center;min-height:230px}
+.landing-hero:has(.banner-art img[src*="services"]) .banner-art img{object-position:60% center}
+.app-hero .generated-app-banner{height:210px;max-width:46%;border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(24,62,137,.18)}
+.app-hero .generated-app-banner img{height:100%;width:100%;object-fit:cover}
+.feature-head:has(.generated-app-banner){min-height:0}
+.article-banner{display:block;width:min(100%,720px);max-height:240px;object-fit:cover;border-radius:15px;margin-top:20px;box-shadow:var(--shadow)}
+.error-banner{display:block;width:min(100%,900px);height:260px;margin:0 auto 12px;object-fit:cover;object-position:right center}
+@media(max-width:760px){.app-hero .generated-app-banner{max-width:100%;height:150px}.feature-head.contact-banner{background-image:linear-gradient(90deg,rgba(255,255,255,.94),rgba(255,255,255,.78)),url('/img/banners/contact.webp')}.article-banner{max-height:170px}.error-banner{height:180px}}
