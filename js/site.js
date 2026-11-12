@@ -146,6 +146,8 @@
     blogSearch.addEventListener("input", filterBlog);
     document.querySelectorAll("[data-blog-category]").forEach(function (a) {
       a.addEventListener("click", function () {
+        document.querySelectorAll("[data-blog-category]").forEach(function (b) { b.classList.remove("on"); });
+        a.classList.add("on");
         blogCategory = norm(a.getAttribute("data-blog-category"));
         blogSearch.value = ""; filterBlog();
       });
