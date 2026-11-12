@@ -27,7 +27,17 @@
   if (search) {
     var out = document.getElementById("search-results");
     var status = document.getElementById("search-status");
+    var categorySelect = document.getElementById("app-category");
+    var catalogCards = Array.prototype.slice.call(document.querySelectorAll(".catalog-app"));
     var data = null, timer = null;
+    var filterCatalog = function () {
+      var q = norm(search.value.trim()), words = q.split(/\s+/).filter(Boolean);
+      var group = categorySelect ? categorySelect.value : "";
+      catalogCards.forEach(function (c) {
+        var k = norm(c.getAttribute("data-k"));
+        c.hidden = !words.every(function (w) { return k.indexOf(w) !== -1; }) || (!!group && c.getAttribute("data-group") !== group);
+      });
+    };
     var load = function () {
       if (data) return Promise.resolve(data);
       return fetch("/data/search.json", { credentials: "same-origin" })
@@ -40,10 +50,12 @@
     var run = function () {
       var q = norm(search.value.trim());
       while (out.firstChild) out.removeChild(out.firstChild);
-      if (q.length < 2) { status.textContent = ""; return; }
+      filterCatalog();
+      var selectedGroup = categorySelect && categorySelect.value ? norm(categorySelect.options[categorySelect.selectedIndex].textContent) : "";
+      if (q.length < 2 && !selectedGroup) { status.textContent = ""; return; }
       load().then(function (all) {
         var words = q.split(/\s+/);
-        var hits = all.filter(function (x) { return words.every(function (w) { return x._k.indexOf(w) !== -1; }); });
+        var hits = all.filter(function (x) { return words.every(function (w) { return x._k.indexOf(w) !== -1; }) && (!selectedGroup || norm(x.g) === selectedGroup); });
         status.textContent = hits.length + (hits.length === 1 ? " app found" : " apps found");
         var grid = document.createElement("div");
         grid.className = "grid";
@@ -52,6 +64,7 @@
       }).catch(function () { status.textContent = "Search is unavailable right now. Browse the categories below."; });
     };
     search.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+    if (categorySelect) categorySelect.addEventListener("change", run);
     search.addEventListener("focus", function () { load().catch(function () {}); }, { once: true });
     var qs = new URLSearchParams(location.search).get("q");
     if (qs) { search.value = qs.slice(0, 80); run(); }
@@ -113,4 +126,36 @@
         "?subject=" + encodeURIComponent(subject.slice(0, 180)) + "&body=" + encodeURIComponent(body);
     });
   }
+
+  // --- blog article search, category filters and newsletter mailto ---
+  var blogSearch = document.getElementById("blog-search");
+  if (blogSearch) {
+    var blogCards = Array.prototype.slice.call(document.querySelectorAll(".blog-card"));
+    var blogResult = document.getElementById("blog-result");
+    var blogCategory = "";
+    var filterBlog = function () {
+      var q = norm(blogSearch.value.trim());
+      var words = q.split(/\s+/).filter(Boolean), shown = 0;
+      blogCards.forEach(function (c) {
+        var k = norm(c.getAttribute("data-blog-k"));
+        var ok = words.every(function (w) { return k.indexOf(w) !== -1; }) && (!blogCategory || k.indexOf(blogCategory) !== -1);
+        c.hidden = !ok; if (ok) shown++;
+      });
+      if (blogResult) blogResult.textContent = "Showing " + shown + (shown === 1 ? " article" : " articles");
+    };
+    blogSearch.addEventListener("input", filterBlog);
+    document.querySelectorAll("[data-blog-category]").forEach(function (a) {
+      a.addEventListener("click", function () {
+        blogCategory = norm(a.getAttribute("data-blog-category"));
+        blogSearch.value = ""; filterBlog();
+      });
+    });
+  }
+  var blogNews = document.getElementById("blog-news-form");
+  if (blogNews) blogNews.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = blogNews.querySelector("[name=email]").value.trim().slice(0, 160);
+    location.href = "mailto:" + blogNews.getAttribute("data-to") + "?subject=" + encodeURIComponent("Newsletter subscription") +
+      "&body=" + encodeURIComponent("Please add me to the Modvanta newsletter: " + email);
+  });
 })();
