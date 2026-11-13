@@ -98,7 +98,7 @@ a.chip:hover{border-color:var(--blue);color:var(--blue)}
 .nav{display:flex;align-items:center;gap:28px;height:72px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.22rem;color:var(--navy);letter-spacing:-.02em}
 .logo:hover{color:var(--navy)}
-.logo svg{width:38px;height:29px}
+.logo img{width:34px;height:34px;border-radius:9px;display:block}
 .nav-links{display:flex;align-items:center;gap:4px;margin-left:auto}
 .nav-links>a,.dd>a{display:flex;align-items:center;gap:4px;padding:8px 12px;font-size:.9rem;font-weight:500;color:var(--ink);
   border-radius:8px;position:relative}
