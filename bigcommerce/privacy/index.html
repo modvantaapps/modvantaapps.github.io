@@ -6,19 +6,19 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Privacy Policy for BigCommerce Apps | Modvanta</title>
-<meta name="description" content="How Modvanta BigCommerce apps (Odoo Connector, Payment &amp; Shipping Rules) handle store data: what we keep, why, for how long, where, and how to have it...">
+<meta name="description" content="How Modvanta BigCommerce apps (Odoo Connector, Payment &amp; Shipping Rules, Order Automation, Store Hours, Delivery Date &amp; ZIP Checker, Back in Stock Alerts)...">
 <link rel="canonical" href="https://modvantaapps.tech/bigcommerce/privacy/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#1a56db">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Modvanta">
 <meta property="og:title" content="Privacy Policy for BigCommerce Apps | Modvanta">
-<meta property="og:description" content="How Modvanta BigCommerce apps (Odoo Connector, Payment &amp; Shipping Rules) handle store data: what we keep, why, for how long, where, and how to have it...">
+<meta property="og:description" content="How Modvanta BigCommerce apps (Odoo Connector, Payment &amp; Shipping Rules, Order Automation, Store Hours, Delivery Date &amp; ZIP Checker, Back in Stock Alerts)...">
 <meta property="og:url" content="https://modvantaapps.tech/bigcommerce/privacy/">
 <meta property="og:image" content="https://modvantaapps.tech/img/og-default.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Privacy Policy for BigCommerce Apps | Modvanta">
-<meta name="twitter:description" content="How Modvanta BigCommerce apps (Odoo Connector, Payment &amp; Shipping Rules) handle store data: what we keep, why, for how long, where, and how to have it...">
+<meta name="twitter:description" content="How Modvanta BigCommerce apps (Odoo Connector, Payment &amp; Shipping Rules, Order Automation, Store Hours, Delivery Date &amp; ZIP Checker, Back in Stock Alerts)...">
 <meta name="twitter:image" content="https://modvantaapps.tech/img/og-default.png">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -44,12 +44,23 @@
 <div class="page-head"><div class="container"><nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/bigcommerce/support/">BigCommerce Apps</a></li><li aria-current="page">Privacy Policy for BigCommerce Apps</li></ol></nav><h1>Privacy Policy for BigCommerce Apps</h1></div></div>
 <section><div class="container legal">
 <p><i>Last updated 14 November 2026.</i></p>
-<p>This policy covers the Modvanta apps on the BigCommerce App Marketplace: <b>Modvanta Odoo Connector</b> and
-<b>Modvanta Payment &amp; Shipping Rules</b> (together, "the apps"). The apps are provided by Modvanta Apps,
-Chandigarh, India ("Modvanta", "we"). Contact: <a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>.</p>
+<p>This policy covers the Modvanta apps on the BigCommerce App Marketplace (together, "the apps"):</p>
+<ul><li><b>Modvanta Odoo Connector</b></li>
+<li><b>Modvanta Payment &amp; Shipping Rules</b></li>
+<li><b>Modvanta Order Automation</b></li>
+<li><b>Modvanta Store Hours &amp; Holiday Mode</b></li>
+<li><b>Modvanta Delivery Date &amp; ZIP Checker</b></li>
+<li><b>Modvanta Back in Stock Alerts</b></li></ul>
+<p>The apps are provided by Modvanta Apps, Chandigarh, India ("Modvanta", "we"). Contact: <a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>.</p>
 <h2>Our role</h2>
-<p>When you (the merchant) install an app, we process your store's data on your behalf, only to run the app. We do
-not sell data, use it for advertising, or share it with anyone except the hosting provider that runs our servers.</p>
+<p>When you (the merchant) install an app, we process your store's data on your behalf, only to run the app. For
+personal data of your shoppers, you are the <b>controller</b> and Modvanta is your <b>processor</b>: we act only on
+your instructions, which are the app's settings. We do not sell data, use it for advertising, or share it with
+anyone except the hosting provider that runs our servers and, for Back in Stock Alerts, the email delivery service
+that sends alerts from our mail server.</p>
+<p>Every app below keeps the store hash, the store owner ID, the permissions granted and the BigCommerce staff user
+IDs that opened the app, to identify the install and its users. Unless stated otherwise, the store's API access token
+is kept encrypted (AES-256-GCM) until uninstall, because the app needs it to work.</p>
 <h2>Modvanta Odoo Connector</h2>
 <p>The app keeps:</p>
 <ul><li>Store hash, store name, store owner ID and the permissions granted, to identify the install. Kept until
@@ -75,22 +86,109 @@ address, email or payment details are stored.</li></ul>
 looks at the payment method, shipping method, customer group, countries, items and totals, compares them with your
 rules, and keeps only the result above. The checkout script runs in the shopper's browser, reads the cart from your
 store, and sends nothing to Modvanta. It sets no cookies.</p>
+<h2>Modvanta Order Automation</h2>
+<p>The app keeps:</p>
+<ul><li>The store details and encrypted access token described above, and a random secret that verifies order
+notifications from BigCommerce. Kept until uninstall.</li>
+<li>Your settings and rules, and a summary of the last auto-cancel run (orders checked, cancelled, errors).</li>
+<li>For each new order handled: the order ID, the result and the time, so an order is never handled twice. Deleted
+after 30 days.</li>
+<li>An activity log: order ID, what was done, the rule name, the old and new status and a short message. Only the
+newest 500 entries per store are kept.</li></ul>
+<p>To apply your rules, the app reads new orders from the BigCommerce API: total, item count, status, payment method,
+billing and shipping countries, products (to tell digital items apart), the customer's group, and the number of
+orders by the same customer, looked up by customer ID or, for guests, by billing email. These details are used only
+to decide which rule applies and are not stored. The app adds nothing to your storefront and reads nothing from
+shoppers' browsers.</p>
+<h2>Modvanta Store Hours &amp; Holiday Mode</h2>
+<p>The app keeps:</p>
+<ul><li>The store details and encrypted access token described above, a webhook secret, and your store's time
+zone. Kept until uninstall.</li>
+<li>Your schedule, holidays, banner text and settings, and the storefront script built from them. The five most
+recent script versions are kept so cached pages keep working.</li>
+<li>For each new order checked: the order ID, the result, and for orders placed while closed, the reason (closed
+hours, holiday or close now), the holiday name and the time the order was placed. Kept until uninstall.</li>
+<li>An activity log of the newest 200 entries, such as "order #1234 placed while closed".</li></ul>
+<p>The app reads each new order's status, source and creation time from the BigCommerce API, and stores none of
+the shopper's details. The storefront script contains only your public schedule and banner text and makes no
+requests to Modvanta. It sets no cookies. When a shopper closes the banner, the browser's session storage remembers
+that until the tab is closed.</p>
+<h2>Modvanta Delivery Date &amp; ZIP Checker</h2>
+<p>The app keeps:</p>
+<ul><li>The store details and encrypted access token described above, a webhook secret, your store's time zone and
+storefront domains. Kept until uninstall.</li>
+<li>Your delivery zones (postcode lists), calendar settings, time slots and the storefront scripts built from
+them.</li>
+<li>Delivery choices made at checkout: the <b>cart ID</b>, the chosen <b>date</b> and <b>time slot</b>, and when it was
+chosen. A choice is deleted when its order is recorded, or after 30 days if the cart never became an order.</li>
+<li>For each order recorded: the <b>order ID</b>, the delivery date and slot, the <b>shipping postcode</b>, the order
+status, the check result and any problems found. These rows make up the upcoming deliveries list and the slot
+capacity counts, and are kept until uninstall. You can export them as CSV.</li></ul>
+<p>The app stores no shopper names, street addresses, emails or payment details. On product pages, the postcode a
+shopper types is checked in the browser when your zone list is small. For large zone lists, or zones limited to
+categories, it is sent to our server to look up the zone, answered, and not stored or logged. The product page
+widget remembers the shopper's last postcode in the browser's local storage, on the shopper's own device. The app
+writes the chosen delivery date to the order in your store (staff notes, order comments if turned on, and order
+metafields), where it stays under your control.</p>
+<h2>Modvanta Back in Stock Alerts</h2>
+<p>This app stores personal data of your shoppers. The app keeps:</p>
+<ul><li>The store details and encrypted access token described above, a webhook secret, your store name, domain and
+store email (used as the Reply-To), and the email addresses of staff users who opened the app (used only for test
+emails). Kept until uninstall.</li>
+<li>Your settings, email template and, if you use your own mail server, its SMTP settings, with the password
+encrypted.</li>
+<li>For each alert request: the shopper's <b>email address</b>, an optional <b>phone number</b> (only if you turn on
+the phone field; it is stored only and never used to send messages), the product and variant, the product name, the
+status, the <b>consent text</b> the shopper agreed to and when, the dates the request was made, confirmed and sent,
+send attempts and the last error, and, if the shopper later ordered the product, the order ID, date and line
+total.</li>
+<li>An email log: the partly hidden address (for example <code>jo***@example.com</code>), the status and any error.
+The newest 1,000 entries per store are kept.</li>
+<li>Whether each requested item is in stock, and its stock level, to detect restocks.</li></ul>
+<p><b>Lawful basis.</b> Shoppers give their email address themselves to receive an alert. With the consent checkbox
+turned on (the default), they must tick it, and the consent text and time are saved with the request. With double
+opt-in, the alert is sent only after they confirm by email. Each shopper gets one alert per request. Every email has
+a one-click unsubscribe link. You, as the controller, decide whether to use the checkbox and are responsible for your
+own privacy notice to shoppers.</p>
+<p><b>Sending.</b> Alerts are sent from our mail server with your store name as the sender name and your store email as
+Reply-To, or from your own SMTP server if you set one up. Shopper addresses are passed to the email delivery service
+only to deliver the email.</p>
+<p><b>Conversions.</b> When an order is created, the app reads its billing email (or the customer's email) and
+products from the BigCommerce API, and compares them with alerts sent in the last 30 days. Only a match is stored, on
+the alert request.</p>
+<p><b>Shopper IP addresses</b> are used only in memory, as a keyed hash, to limit repeated sign-ups. They are not
+stored.</p>
+<p><b>Retention.</b></p>
+<ul><li>Unconfirmed requests (double opt-in): deleted after 7 days.</li>
+<li>Waiting requests: kept until the alert is sent, the shopper unsubscribes, you delete them, or you uninstall.</li>
+<li>Sent, failed and unsubscribed requests: deleted 365 days after the request was made. When a shopper unsubscribes,
+the phone number is removed at once and the email is kept only so that alert is never sent again.</li>
+<li>Email log entries: deleted after 365 days.</li></ul>
+<p><b>Deletion on request.</b> You can delete one request, or every request and log entry for an email address, with
+<b>Erase a shopper (GDPR)</b> in the app. A shopper can also ask you, or write to <a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>; we will act on it for the
+store concerned, with your agreement, within 30 days.</p>
+<p><b>On uninstall</b>, every request, email address, phone number, log entry and setting for the store is
+deleted.</p>
 <h2>What we never collect</h2>
-<p>Card numbers or other payment credentials, passwords, or shopper data for marketing. The apps set no tracking
-cookies and use no analytics in the control panel.</p>
+<p>Card numbers or other payment credentials, shopper passwords, or shopper data for marketing. Back in Stock Alerts
+emails a shopper only about the product they asked about. The apps set no tracking cookies and use no analytics.</p>
 <h2>Where data is kept and how it is protected</h2>
-<p>Our servers are hosted by Hostinger. Data is sent over HTTPS only. Access tokens are encrypted at rest.
-Requests from BigCommerce are verified with signed tokens. Server logs record the request method, path and status
-only, and are kept for 30 days.</p>
+<p>Our servers are hosted by Hostinger. Data is sent over HTTPS only. Access tokens and SMTP passwords are encrypted
+at rest. Requests from BigCommerce are verified with signed tokens and per-store secrets. Storefront scripts are
+pinned with integrity hashes, and our public endpoints answer only your store's own domains. Server logs record the
+request method, path and status, and app events such as a failed email send (with the address partly hidden). They
+never contain full shopper email addresses or postcodes, and are kept for 30 days.</p>
 <h2>Deletion</h2>
 <p>Uninstalling an app deletes everything that app keeps about your store, straight away. Backups that contain
-it are overwritten within 30 days. To ask for deletion or a copy of your data without uninstalling, email <a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>.
-We answer within 30 days.</p>
+it are overwritten within 30 days. Data an app wrote to your BigCommerce orders (statuses, staff notes, order
+comments, metafields) stays in your store. To ask for deletion or a copy of your data without uninstalling, email
+<a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>. We answer within 30 days.</p>
 <h2>Your rights and your shoppers</h2>
 <p>Depending on where you are, you and your shoppers may have rights under laws such as the GDPR, UK GDPR, CCPA or
 India's Digital Personal Data Protection Act 2023, including access, correction and deletion. Send requests to
-<a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>. Because shopper data is not stored by the apps, most shopper requests are handled in BigCommerce or in your
-Odoo system.</p>
+<a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>. Back in Stock Alerts is the only app that stores shopper email addresses; for it, see the section above.
+Delivery Date &amp; ZIP Checker stores order IDs with postcodes and delivery dates. Other shopper requests are
+handled in BigCommerce or in your Odoo system.</p>
 <h2>Changes</h2>
 <p>We will post changes on this page and update the date above. If a change affects how store data is used, we
 will tell store owners by email before it takes effect.</p>
