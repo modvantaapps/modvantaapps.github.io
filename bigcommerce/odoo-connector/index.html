@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Modvanta Odoo Connector: Installation Guide | Modvanta</title>
+<meta name="description" content="Install and pair the Modvanta Odoo Connector for BigCommerce with the Modvanta BigCommerce Connector module in Odoo 19: requirements, pairing code steps...">
+<link rel="canonical" href="https://modvantaapps.tech/bigcommerce/odoo-connector/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#1a56db">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Modvanta">
+<meta property="og:title" content="Modvanta Odoo Connector: Installation Guide | Modvanta">
+<meta property="og:description" content="Install and pair the Modvanta Odoo Connector for BigCommerce with the Modvanta BigCommerce Connector module in Odoo 19: requirements, pairing code steps...">
+<meta property="og:url" content="https://modvantaapps.tech/bigcommerce/odoo-connector/">
+<meta property="og:image" content="https://modvantaapps.tech/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Modvanta Odoo Connector: Installation Guide | Modvanta">
+<meta name="twitter:description" content="Install and pair the Modvanta Odoo Connector for BigCommerce with the Modvanta BigCommerce Connector module in Odoo 19: requirements, pairing code steps...">
+<meta name="twitter:image" content="https://modvantaapps.tech/img/og-default.png">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/css/site.css?v=07ecc75319">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://modvantaapps.tech/#org","name":"Modvanta","url":"https://modvantaapps.tech/","logo":"https://modvantaapps.tech/img/logo-512.png","email":"modvantaapps@gmail.com","description":"Modvanta builds Odoo modules, Shopify apps, Magento extensions, integrations and custom software.","sameAs":["https://apps.odoo.com/apps/modules/browse?author=Modvanta"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"modvantaapps@gmail.com","availableLanguage":["English"]}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://modvantaapps.tech/"},{"@type":"ListItem","position":2,"name":"BigCommerce Apps","item":"https://modvantaapps.tech/bigcommerce/support/"},{"@type":"ListItem","position":3,"name":"Modvanta Odoo Connector: Installation Guide","item":"https://modvantaapps.tech/bigcommerce/odoo-connector/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav">
+<a class="logo" href="/" aria-label="Modvanta home"><img src="/img/brand-mark-64.png" width="36" height="36" alt="" decoding="async"><span>Modvanta</span></a>
+<nav class="nav-links" aria-label="Main">
+<a href="/">Home</a>
+<div class="dd"><a href="/services/">Services <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="dd-menu"><a href="/hire-odoo-developer/">Hire an Odoo developer</a><a href="/services/odoo-development/">Custom Odoo development</a><a href="/services/odoo-integration/">Integrations &amp; APIs</a><a href="/services/odoo-implementation/">Implementation &amp; setup</a><a href="/services/odoo-migration/">Upgrades &amp; migration</a><a href="/services/odoo-localization/">Localization &amp; compliance</a><a href="/services/odoo-support/">Support &amp; maintenance</a><a class="dd-sep" href="/services/shopify-development/">Shopify development</a><a href="/services/magento-development/">Magento development</a><a href="/services/custom-software-development/">Custom software</a><a class="dd-sep" href="/solutions/">Business solutions</a></div></div>
+<div class="dd"><a href="/odoo-apps/">Odoo Apps <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="dd-menu"><a href="/odoo-apps/payment-gateways/">Payment gateways</a><a href="/odoo-apps/shipping-carriers/">Shipping carriers</a><a href="/odoo-apps/connectors/">Connectors &amp; integrations</a><a href="/odoo-apps/point-of-sale/">Point of Sale</a><a href="/odoo-apps/localization/">Localization &amp; compliance</a><a href="/odoo-apps/ecommerce/">eCommerce &amp; website</a><a href="/odoo-apps/accounting/">Accounting &amp; finance</a><a href="/odoo-apps/sales-crm/">Sales &amp; CRM</a><a href="/odoo-apps/inventory-manufacturing/">Inventory &amp; manufacturing</a><a href="/odoo-apps/human-resources/">HR &amp; payroll</a><a href="/odoo-apps/industry-solutions/">Industry solutions</a><a href="/odoo-apps/productivity-tools/">Productivity &amp; admin</a><a class="dd-sep" href="/odoo-apps/">All 1,037 apps</a></div></div>
+<div class="dd"><a href="/industries/">Industries <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="dd-menu"><a href="/industries/logistics-transport/">Logistics &amp; Transport</a><a href="/industries/retail-pos/">Retail &amp; Point of Sale</a><a href="/industries/ecommerce/">eCommerce &amp; Marketplaces</a><a href="/industries/hospitality/">Hotels &amp; Restaurants</a><a href="/industries/healthcare/">Healthcare &amp; Clinics</a><a href="/industries/construction-real-estate/">Construction &amp; Real Estate</a><a href="/industries/rental/">Rental Businesses</a><a href="/industries/travel-events/">Travel, Tours &amp; Events</a><a href="/industries/manufacturing/">Manufacturing &amp; Quality</a><a href="/industries/education/">Education &amp; Field Services</a></div></div>
+<a href="/blog/">Blog</a><a href="/about/">About Us</a><a href="/contact/">Contact</a>
+</nav>
+<a class="btn btn-primary nav-cta" href="/request-quote/">Request a Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+<details class="menu"><summary aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav class="menu-panel" aria-label="Mobile"><a href="/">Home</a><a href="/services/">Services</a><a href="/hire-odoo-developer/">Hire a Developer</a><a href="/solutions/">Solutions</a><a href="/odoo-apps/">Odoo Apps</a><a href="/industries/">Industries</a><a href="/blog/">Blog</a><a href="/about/">About Us</a><a href="/contact/">Contact</a><a class="btn btn-primary" href="/request-quote/">Request a Quote</a></nav></details>
+</div></header>
+<main id="main">
+<div class="page-head"><div class="container"><nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/bigcommerce/support/">BigCommerce Apps</a></li><li aria-current="page">Modvanta Odoo Connector: Installation Guide</li></ol></nav><h1>Modvanta Odoo Connector: Installation Guide</h1></div></div>
+<section><div class="container legal">
+<p>The Modvanta Odoo Connector links a BigCommerce store to Odoo, the open-source ERP. Orders, products, stock,
+customers, price lists, shipments and refunds are synchronised by the <b>Modvanta BigCommerce Connector</b> module
+in Odoo. The BigCommerce app handles the connection: it gives your Odoo server secure API access to your store,
+with no API account to create and no token to copy.</p>
+<h2>Requirements</h2>
+<ul><li>Odoo 19, Community or Enterprise.</li>
+<li>The Modvanta BigCommerce Connector module (<code>mdv_bigcommerce_connector</code>, version 19.0.1.1.0 or later),
+sold separately on the Odoo Apps Store.</li>
+<li>Your Odoo server reachable from the internet over HTTPS with a valid certificate, on port 443 or 8443.</li>
+<li>An Odoo user with the BigCommerce <b>Administrator</b> access right, and the BigCommerce store owner or a staff user allowed
+to install apps.</li></ul>
+<h2>1. Install the Odoo module</h2>
+<ol><li>Add <code>mdv_bigcommerce_connector</code> to your Odoo addons path and restart Odoo.</li>
+<li>In Odoo, open <b>Apps</b>, update the apps list, search for <i>BigCommerce</i> and install it.</li>
+<li>Open <b>BigCommerce &gt; Configuration &gt; Stores</b> and create a store record. Choose the company,
+warehouse, pricelist and sales team that BigCommerce orders should use.</li></ol>
+<h2>2. Install the app in BigCommerce</h2>
+<ol><li>In the BigCommerce control panel, open <b>Apps &gt; Marketplace</b>, find <i>Modvanta Odoo Connector</i>
+and click <b>Install</b>.</li>
+<li>Review the permissions and confirm. The app opens inside your control panel and shows the pairing form.</li></ol>
+<h2>3. Pair the store with Odoo</h2>
+<ol><li>In Odoo, open your store record and click <b>Connect with the BigCommerce App</b>. Odoo shows a
+16-character pairing code. It works once and expires after 15 minutes.</li>
+<li>In the BigCommerce app, enter your Odoo address (for example <code>https://erp.example.com</code>) and the
+code, then click <b>Connect to Odoo</b>.</li>
+<li>The app sends the store's API access to Odoo, server to server, and shows <b>Connected to Odoo</b>. The app then
+deletes its own copy of the access token. Odoo stores it encrypted on your server.</li></ol>
+<h2>4. Choose what to synchronise</h2>
+<p>On the Odoo store record, set:</p>
+<ul><li><b>Orders</b>: which BigCommerce statuses to import, and when Odoo confirms, invoices and registers payment.</li>
+<li><b>Products</b>: import from BigCommerce or export from Odoo. Products are matched by SKU, then barcode, so
+existing products are not duplicated.</li>
+<li><b>Stock</b>: which Odoo warehouses feed which BigCommerce inventory locations. Stock is pushed as it moves.</li>
+<li><b>Customers and price lists</b>: map BigCommerce customer groups to Odoo pricelists.</li></ul>
+<p>Use <b>BigCommerce &gt; Operations &gt; Synchronise...</b> for a first full import, then let webhooks and scheduled jobs keep everything current.
+Shipments with tracking numbers, cancellations and refunds made in Odoo are sent back to BigCommerce.</p>
+<h2>Moving to another Odoo database</h2>
+<p>Because the app does not keep your access token after pairing, uninstall and reinstall the app, then pair with
+a new code from the other database.</p>
+<h2>Uninstalling</h2>
+<p>Uninstall the app from <b>Apps &gt; My Apps</b>. BigCommerce revokes the access token, the app tells your Odoo
+server, and Odoo marks the store as disconnected. Data already in Odoo stays in Odoo. The app deletes its record of
+your store.</p>
+<h2>Troubleshooting</h2>
+<ul><li><b>"Code not valid"</b>: the code expired, was already used, or was mistyped. Generate a new one in Odoo.</li>
+<li><b>"Odoo server not reachable"</b>: check the address opens in a browser from outside your network, uses HTTPS
+with a valid certificate, and runs on port 443 or 8443.</li>
+<li><b>Orders not arriving</b>: open <b>BigCommerce &gt; Operations &gt; Sync Log</b> and <b>Webhook Log</b> in Odoo.</li></ul>
+<p>Still stuck? Email <a href="mailto:support@modvantaapps.tech">support@modvantaapps.tech</a>.</p></div></section>
+</main>
+<footer class="site-footer"><div class="container">
+<div class="foot-grid">
+<div class="foot-brand"><a class="logo" href="/"><img src="/img/brand-mark-64.png" width="36" height="36" alt="" decoding="async"><span>Modvanta</span></a>
+<p>Odoo, Shopify, Magento and custom software development for businesses around the world.</p>
+<a class="mail" href="mailto:modvantaapps@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg> modvantaapps@gmail.com</a></div>
+<div><h4>Company</h4><ul><li><a href="/about/">About Us</a></li><li><a href="/hire-odoo-developer/">Hire an Odoo Developer</a></li><li><a href="/careers/">Careers</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li><li><a href="/request-quote/">Request a Quote</a></li></ul></div>
+<div><h4>Services</h4><ul><li><a href="/services/odoo-development/">Custom Odoo development</a></li><li><a href="/services/odoo-integration/">Integrations &amp; APIs</a></li><li><a href="/services/odoo-implementation/">Implementation &amp; setup</a></li><li><a href="/services/shopify-development/">Shopify development</a></li><li><a href="/services/magento-development/">Magento development</a></li><li><a href="/services/custom-software-development/">Custom software</a></li></ul></div>
+<div><h4>Odoo Apps</h4><ul><li><a href="/odoo-apps/payment-gateways/">Payment gateways</a></li><li><a href="/odoo-apps/shipping-carriers/">Shipping carriers</a></li><li><a href="/odoo-apps/connectors/">Connectors &amp; integrations</a></li><li><a href="/odoo-apps/point-of-sale/">Point of Sale</a></li><li><a href="/odoo-apps/localization/">Localization &amp; compliance</a></li><li><a href="/odoo-apps/">All 1,037 apps</a></li></ul></div>
+</div>
+<div class="foot-bottom"><span>&copy; 2026 Modvanta. All rights reserved.</span>
+<span class="foot-legal"><a href="/privacy">Privacy Policy</a><a href="/license">Licence</a><a href="/support">Support</a><a href="/blog/feed.xml">RSS</a></span></div>
+<p class="foot-tm">Odoo is a trademark of Odoo S.A. Modvanta is an independent company, not affiliated with Odoo S.A.</p>
+</div></footer>
+<script src="/js/site.js?v=0b3be1e486" defer></script>
+</body>
+</html>
