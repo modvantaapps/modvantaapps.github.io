@@ -97,7 +97,7 @@
     });
   }
 
-  // --- contact form: opens the visitor's mail app, nothing is sent to a server ---
+  // --- contact / quote form: posted to the mdv_forms receiver, mailto as fallback ---
   var form = document.getElementById("contact-form");
   if (form) {
     var params = new URLSearchParams(location.search);
@@ -118,17 +118,57 @@
       if (m && !m.value) m.value = "About the app: " + pre.slice(0, 120) + "\n\n";
       if (t) t.value = "Customise an existing app";
     }
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    var started = Date.now();
+    var status = form.querySelector(".form-status");
+    var mailtoFallback = function () {
       var f = function (n) { var el = form.querySelector("[name=" + n + "]"); return el ? el.value.trim().slice(0, 4000) : ""; };
       var subject = (f("topic") || "Project enquiry") + (f("company") ? " - " + f("company") : "");
-      var body = [
-        "Name: " + f("name"), "Company: " + f("company"), "Email: " + f("email"),
-        "Phone: " + f("phone"), "Odoo version: " + f("version"),
-        "Users: " + f("users"), "Start: " + f("timeline"), "", f("message")
-      ].join("\n");
-      location.href = "mailto:" + form.getAttribute("data-to") +
-        "?subject=" + encodeURIComponent(subject.slice(0, 180)) + "&body=" + encodeURIComponent(body);
+      var body = ["Name: " + f("name"), "Company: " + f("company"), "Email: " + f("email"), "Phone: " + f("phone"),
+        "Odoo version: " + f("version"), "Users: " + f("users"), "Start: " + f("timeline"), "", f("message")].join("\n");
+      return "mailto:" + form.getAttribute("data-to") + "?subject=" + encodeURIComponent(subject.slice(0, 180)) +
+        "&body=" + encodeURIComponent(body);
+    };
+    var setStatus = function (text, err, link) {
+      if (!status) return;
+      status.textContent = text;
+      status.classList.toggle("err", !!err);
+      if (link) {
+        var a = document.createElement("a");
+        a.href = link; a.textContent = " Send it by email instead.";
+        status.appendChild(a);
+      }
+    };
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var endpoint = form.getAttribute("data-endpoint");
+      if (!endpoint || !window.fetch) { location.href = mailtoFallback(); return; }
+      var btn = form.querySelector("button[type=submit]");
+      var data = new URLSearchParams(new FormData(form));
+      data.set("form", form.getAttribute("data-form") || "quote");
+      data.set("elapsed", String(Date.now() - started));
+      data.set("page", location.pathname.slice(0, 200));
+      if (btn) btn.disabled = true;
+      setStatus("Sending...", false);
+      fetch(endpoint, { method: "POST", body: data, credentials: "omit", mode: "cors" })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.ok, status: r.status }; }); })
+        .then(function (res) {
+          if (!res.ok) throw res;
+          var done = document.createElement("div");
+          done.className = "form-done";
+          done.setAttribute("role", "status");
+          done.innerHTML = '<span class="fi blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>' +
+            "<h3>Thank you, we have your request</h3><p>We reply by email within one working day, usually sooner. " +
+            "Check your spam folder if you do not see it.</p>";
+          form.replaceWith(done);
+        })
+        .catch(function (err) {
+          if (btn) btn.disabled = false;
+          var msg = err && err.status === 429 ? "Too many requests from your connection. Please try again later." :
+            err && err.status === 400 ? "Please check your name, email and message." :
+            "Sorry, the form could not be sent.";
+          setStatus(msg, true, mailtoFallback());
+        });
     });
   }
 

@@ -520,3 +520,12 @@ section.sec-tight{padding:56px 0}
 .cta .btn-row{flex:none}
 @media (max-width:900px){.proj-grid{grid-template-columns:1fr}}
 @media (max-width:560px){.proj{padding:22px 18px 18px}.proj-app{margin-left:0}}
+
+/* form receiver: spam trap + sent state */
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.form{position:relative}
+.form-status.err{color:#b42318}
+.form-done{text-align:center;padding:28px 8px}
+.form-done h3{margin:12px 0 6px}
+.form-done p{color:var(--muted);margin:0 auto;max-width:420px}
+.form-done .fi{margin:0 auto}
