@@ -106,6 +106,11 @@
       var sel = form.querySelector("[name=topic]");
       if (sel) Array.prototype.forEach.call(sel.options, function (o) { if (o.text === sol) sel.value = o.text; });
     }
+    var prj = params.get("project");
+    if (prj) {
+      var pm = form.querySelector("[name=message]");
+      if (pm && !pm.value) pm.value = "About your AI project: " + prj.slice(0, 120) + "\n\n";
+    }
     var pre = params.get("app");
     if (pre) {
       var t = form.querySelector("[name=topic]");
