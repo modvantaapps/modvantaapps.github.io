@@ -97,6 +97,36 @@
     });
   }
 
+
+  // --- Magento / Shopify catalogue: search + category chips ---
+  var extSearch = document.getElementById("ext-search");
+  if (extSearch) {
+    var extCards = Array.prototype.slice.call(document.querySelectorAll(".ext-card"));
+    var extBtns = Array.prototype.slice.call(document.querySelectorAll("[data-ext-group]"));
+    var extStatus = document.getElementById("ext-status");
+    var extGroup = "";
+    var extRun = function () {
+      var words = norm(extSearch.value.trim()).split(/\s+/).filter(Boolean), shown = 0;
+      extCards.forEach(function (c) {
+        if (!c._k) c._k = norm(c.textContent);
+        var k = c._k;
+        var ok = words.every(function (w) { return k.indexOf(w) !== -1; }) && (!extGroup || c.getAttribute("data-group") === extGroup);
+        c.hidden = !ok; if (ok) shown++;
+      });
+      extStatus.textContent = shown ? "Showing " + shown + " of " + extCards.length + "." :
+        "Nothing matches. Try another word, or request a quote for a custom build.";
+    };
+    extBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        extGroup = b.getAttribute("data-ext-group");
+        extBtns.forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        extRun();
+      });
+    });
+    var extTimer = null;
+    extSearch.addEventListener("input", function () { clearTimeout(extTimer); extTimer = setTimeout(extRun, 100); });
+  }
+
   // --- contact / quote form: posted to the mdv_forms receiver, mailto as fallback ---
   var form = document.getElementById("contact-form");
   if (form) {
@@ -111,6 +141,23 @@
       var pm = form.querySelector("[name=message]");
       if (pm && !pm.value) pm.value = "About your AI project: " + prj.slice(0, 120) + "\n\n";
     }
+    var item = (params.get("item") || "").slice(0, 120), plat = (params.get("platform") || "").slice(0, 40);
+    if (item && /^(Magento 2|Shopify)$/.test(plat)) {
+      var price = (params.get("price") || "").slice(0, 60);
+      var pick = document.getElementById("quote-pick");
+      if (pick) {
+        document.getElementById("quote-pick-platform").textContent = plat + (plat === "Shopify" ? " app" : " extension");
+        document.getElementById("quote-pick-name").textContent = item;
+        document.getElementById("quote-pick-price").textContent = price;
+        document.getElementById("quote-pick-change").href = plat === "Shopify" ? "/shopify-apps/" : "/magento-extensions/";
+        pick.hidden = false;
+      }
+      var tp = form.querySelector("[name=topic]"), vs = form.querySelector("[name=version]"), ms = form.querySelector("[name=message]");
+      if (tp) tp.value = plat === "Shopify" ? "Shopify app" : "Magento 2 extension";
+      if (vs) vs.value = plat === "Shopify" ? "Shopify" : "Magento 2";
+      if (ms && !ms.value) ms.value = "I would like a quote for the " + plat + " " + (plat === "Shopify" ? "app" : "extension") +
+        ": " + item + (price ? " (" + price + ")" : "") + ".\nMy store URL: \nInstallation help needed: yes / no\n\n";
+    }
     var pre = params.get("app");
     if (pre) {
       var t = form.querySelector("[name=topic]");
@@ -124,7 +171,7 @@
       var f = function (n) { var el = form.querySelector("[name=" + n + "]"); return el ? el.value.trim().slice(0, 4000) : ""; };
       var subject = (f("topic") || "Project enquiry") + (f("company") ? " - " + f("company") : "");
       var body = ["Name: " + f("name"), "Company: " + f("company"), "Email: " + f("email"), "Phone: " + f("phone"),
-        "Odoo version: " + f("version"), "Users: " + f("users"), "Start: " + f("timeline"), "", f("message")].join("\n");
+        "Platform: " + f("version"), "Users: " + f("users"), "Start: " + f("timeline"), "", f("message")].join("\n");
       return "mailto:" + form.getAttribute("data-to") + "?subject=" + encodeURIComponent(subject.slice(0, 180)) +
         "&body=" + encodeURIComponent(body);
     };
