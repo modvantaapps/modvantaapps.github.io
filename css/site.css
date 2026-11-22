@@ -40,7 +40,7 @@
 }
 /* ------------------------------------------------------------------ Modvanta v3: clean, mockup-led design */
 :root{
-  --navy:#0f1a44;--ink:#16204a;--text:#46506e;--muted:#6b7490;--line:#e5e8f3;--line-2:#d9def0;
+  --navy:#0f1a44;--ink:#16204a;--text:#46506e;--muted:#5f6884;--line:#e5e8f3;--line-2:#d9def0;
   --blue:#1f5eff;--blue-d:#1749d6;--purple:#7c3aed;--soft:#f6f7fe;--hero-a:#f4f6ff;--hero-b:#eceffe;
   --radius:16px;--shadow:0 1px 2px rgba(16,28,80,.04),0 10px 30px rgba(16,28,80,.06);
   --shadow-h:0 2px 4px rgba(16,28,80,.05),0 18px 40px rgba(31,94,255,.12);
@@ -82,7 +82,7 @@ code{font-size:.88em;background:var(--soft);padding:.1em .4em;border-radius:6px;
 .btn-sm{height:38px;padding:0 16px;font-size:.85rem}
 .btn-pill{border-radius:999px}
 .btn-row{display:flex;flex-wrap:wrap;gap:12px}
-.tag,.kicker,.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--blue);
+.tag,.kicker,.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--blue-d);
   background:#e9efff;border-radius:999px;padding:5px 12px;margin-bottom:16px;letter-spacing:.01em}
 .tag svg,.eyebrow svg{width:14px;height:14px}
 .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--blue)}
@@ -186,7 +186,7 @@ a.fcard:hover{border-color:#c9d5ff;box-shadow:var(--shadow-h);transform:translat
 .strip{padding:30px 0;border-bottom:1px solid var(--line)}
 .strip-in{display:flex;align-items:center;gap:20px 34px;flex-wrap:wrap;justify-content:center}
 .strip-in span{font-size:.85rem;color:var(--muted);font-weight:500}
-.strip-in a{font-weight:700;font-size:1.02rem;color:#8a92ab;letter-spacing:-.01em}
+.strip-in a{font-weight:700;font-size:1.02rem;color:#5f6884;letter-spacing:-.01em}
 .strip-in a:hover{color:var(--navy)}
 
 /* stats */
@@ -370,7 +370,7 @@ section.sec-tight{padding:56px 0}
 .foot-brand p{margin:16px 0 0;max-width:300px;line-height:1.65}
 .foot-brand a.mail{display:inline-flex;align-items:center;gap:8px;color:#fff;margin-top:16px}
 .foot-brand a.mail svg{width:17px;height:17px}
-.site-footer h4{color:#fff;font-size:.92rem;font-weight:600;margin-bottom:16px}
+.site-footer h4,.site-footer .foot-h{color:#fff;font-size:.92rem;font-weight:600;margin-bottom:16px}
 .site-footer ul{list-style:none;display:grid;gap:10px}
 .site-footer ul a{color:#b7bfdc}
 .site-footer a:hover{color:#fff}
