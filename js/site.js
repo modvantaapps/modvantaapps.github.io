@@ -2,6 +2,32 @@
   "use strict";
 
   // --- app search (/odoo-apps/) and in-page filter (category pages) ---
+  // --- anonymous page-view count (no cookies; nothing stored about the visitor on our side) ---
+  var STATS_URL = "https://forms.179-197-253-51.sslip.io/hit";
+  var firstSource = (function () {
+    var qs = new URLSearchParams(location.search), ref = "";
+    try { ref = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : ""; } catch (e) { ref = ""; }
+    var src = (qs.get("utm_source") || "").slice(0, 40), camp = (qs.get("utm_campaign") || "").slice(0, 80);
+    var here = src ? src + (camp ? "/" + camp : "") : (ref && ref.indexOf("modvantaapps.tech") === -1 ? ref : "");
+    try {
+      if (here && !sessionStorage.getItem("mdv_src")) sessionStorage.setItem("mdv_src", here.slice(0, 160));
+      return sessionStorage.getItem("mdv_src") || "";
+    } catch (e) { return here; }
+  })();
+  (function () {
+    if (navigator.doNotTrack === "1" || !navigator.sendBeacon || location.hostname !== "modvantaapps.tech") return;
+    var qs = new URLSearchParams(location.search), ref = "";
+    try { ref = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : ""; } catch (e) { ref = ""; }
+    var clean = function (v, re, n) { v = (v || "").slice(0, n); return re.test(v) ? v : ""; };
+    var body = new URLSearchParams();
+    body.set("p", clean(location.pathname, /^\/[A-Za-z0-9\/_.%-]*$/, 200) || "/");
+    var r = clean(ref, /^[a-z0-9.-]*$/, 100); if (r) body.set("r", r);
+    var s = clean(qs.get("utm_source"), /^[A-Za-z0-9_.-]*$/, 40); if (s) body.set("s", s);
+    var c = clean(qs.get("utm_campaign"), /^[A-Za-z0-9_.-]*$/, 80); if (c) body.set("c", c);
+    body.set("d", window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? "m" : "d");
+    try { navigator.sendBeacon(STATS_URL, new Blob([body.toString()], { type: "application/x-www-form-urlencoded" })); } catch (e) {}
+  })();
+
   function norm(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 
   function card(app) {
@@ -194,6 +220,7 @@
       data.set("form", form.getAttribute("data-form") || "quote");
       data.set("elapsed", String(Date.now() - started));
       data.set("page", location.pathname.slice(0, 200));
+      if (firstSource) data.set("source", firstSource);
       if (btn) btn.disabled = true;
       setStatus("Sending...", false);
       fetch(endpoint, { method: "POST", body: data, credentials: "omit", mode: "cors" })
