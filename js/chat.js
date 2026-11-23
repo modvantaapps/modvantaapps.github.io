@@ -1,6 +1,6 @@
 /* Modvanta Assistant: a small on-site helper. It answers only from this site's own content
-   (/data/assistant.json + /data/search.json), runs fully in the browser, sends nothing anywhere,
-   and hands the visitor to a person by email when it can't help. */
+   (/data/assistant.json + /data/search.json) and runs fully in the browser. Nothing is sent anywhere
+   unless the visitor fills in the "talk to a person" form, which goes to our own form server. */
 (function () {
   "use strict";
   if (window.__mdvChat) return;
@@ -189,14 +189,61 @@
     });
   }
 
-  function handoff() {
-    var lines = log.filter(function (m) { return m.who === "me"; }).map(function (m) { return "- " + m.text; });
+  var SUBMIT_URL = "https://forms.179-197-253-51.sslip.io/submit";
+  var MAIL = "modvantaapps@gmail.com";
+
+  function mailtoHref(lines) {
     var body = "Hello Modvanta,\n\n" + (lines.length ? "My questions from the website chat:\n" + lines.join("\n") + "\n\n" : "") +
-      "Odoo version / edition: \nCompany: \nWhat I need: \n\nSent from page: " + location.pathname;
-    var href = "mailto:" + ((data && data.email) || "modvantaapps@gmail.com") + "?subject=" +
-      encodeURIComponent("Question from the website chat") + "&body=" + encodeURIComponent(body.slice(0, 1800));
-    push({ who: "bot", text: "Your email app should open now with this chat filled in. Add any details and press send; we reply within 24 hours on working days. No email app? Write to " + ((data && data.email) || "modvantaapps@gmail.com") + "." });
-    location.href = href;
+      "What I need: \n\nSent from page: " + location.pathname;
+    return "mailto:" + ((data && data.email) || MAIL) + "?subject=" + encodeURIComponent("Question from the website chat") +
+      "&body=" + encodeURIComponent(body.slice(0, 1800));
+  }
+
+  function handoff() {
+    if (el.log.querySelector(".mc-form")) { el.log.querySelector(".mc-form input").focus(); return; }
+    var lines = log.filter(function (m) { return m.who === "me"; }).map(function (m) { return "- " + m.text; });
+    push({ who: "bot", text: "Leave your name and email and we'll reply by email within one working day. Your questions from this chat are included." });
+    var shown = Date.now();
+    var f = node("form", "mc-form"); f.noValidate = false;
+    var mk = function (name, label, type, req) {
+      var l = node("label", "", label), i = node(type === "textarea" ? "textarea" : "input");
+      if (type !== "textarea") i.type = type;
+      i.name = name; i.required = !!req; i.maxLength = type === "textarea" ? 1000 : 120;
+      if (name === "email") i.autocomplete = "email"; if (name === "name") i.autocomplete = "name";
+      l.appendChild(i); f.appendChild(l); return i;
+    };
+    var iName = mk("name", "Your name", "text", true), iMail = mk("email", "Email", "email", true);
+    var iNote = mk("note", "Anything to add? (optional)", "textarea", false);
+    var btn = node("button", "mc-send-form", "Send to the team"); btn.type = "submit"; f.appendChild(btn);
+    var st = node("p", "mc-form-status"); st.setAttribute("role", "status"); f.appendChild(st);
+    f.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (!f.reportValidity()) return;
+      var src = ""; try { src = sessionStorage.getItem("mdv_src") || ""; } catch (e) {}
+      var msg = (lines.length ? "Questions from the website chat:\n" + lines.join("\n") : "Asked to talk to a person from the website chat.") +
+        (iNote.value.trim() ? "\n\nAdded: " + iNote.value.trim() : "");
+      var body = new URLSearchParams();
+      body.set("form", "chat"); body.set("name", iName.value.trim()); body.set("email", iMail.value.trim());
+      body.set("topic", "Website chat"); body.set("message", msg.slice(0, 3900));
+      body.set("page", location.pathname.slice(0, 200)); if (src) body.set("source", src);
+      body.set("elapsed", String(Math.max(Date.now() - shown, 0)));
+      btn.disabled = true; st.textContent = "Sending...";
+      fetch(SUBMIT_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.ok) throw j; }); })
+        .then(function () {
+          f.remove();
+          push({ who: "bot", text: "Thanks, " + iName.value.trim().slice(0, 40) + ". Your message is with our team; we'll reply to " + iMail.value.trim().slice(0, 80) + " within one working day." });
+        })
+        .catch(function () {
+          btn.disabled = false;
+          st.textContent = "";
+          var a = node("a", "", "send it by email instead"); a.href = mailtoHref(lines);
+          st.appendChild(document.createTextNode("That didn't go through. Please try again, or ")); st.appendChild(a); st.appendChild(document.createTextNode("."));
+        });
+    });
+    el.log.appendChild(f);
+    el.log.scrollTop = el.log.scrollHeight;
+    iName.focus();
   }
 
   function toggle(open) {
@@ -245,7 +292,7 @@
     go.appendChild(svg("M3 11l18-8-8 18-2-8-8-2z"));
     form.appendChild(el.input); form.appendChild(go);
     form.addEventListener("submit", function (e) { e.preventDefault(); var v = el.input.value; el.input.value = ""; send(v); });
-    var foot = node("p", "mc-note", "Answers come from this website. Nothing you type is stored or sent unless you choose to email us.");
+    var foot = node("p", "mc-note", "Answers come from this website. Nothing you type is sent unless you send it to our team.");
 
     el.panel.appendChild(head); el.panel.appendChild(el.log); el.panel.appendChild(form); el.panel.appendChild(foot);
     el.btn.addEventListener("click", function () { toggle(el.panel.hidden); });

@@ -153,6 +153,39 @@
     extSearch.addEventListener("input", function () { clearTimeout(extTimer); extTimer = setTimeout(extRun, 100); });
   }
 
+  // --- short "ask about this app" forms: same receiver, mailto fallback ---
+  Array.prototype.forEach.call(document.querySelectorAll("form[data-mini]"), function (mf) {
+    var shown = Date.now(), st = mf.querySelector(".form-status"), b = mf.querySelector("button[type=submit]");
+    mf.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (!mf.reportValidity()) return;
+      var data = new URLSearchParams(new FormData(mf));
+      data.set("form", mf.getAttribute("data-mini"));
+      data.set("topic", (mf.getAttribute("data-topic") || "").slice(0, 110));
+      data.set("elapsed", String(Date.now() - shown));
+      data.set("page", location.pathname.slice(0, 200));
+      if (firstSource) data.set("source", firstSource);
+      if (b) b.disabled = true;
+      st.textContent = "Sending...";
+      fetch(mf.getAttribute("data-endpoint"), { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: data.toString() })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.ok) throw j; }); })
+        .then(function () {
+          var ok = document.createElement("p"); ok.className = "mini-done";
+          ok.textContent = "Thanks, your question has been sent. We'll reply by email within one working day.";
+          mf.replaceWith(ok);
+        })
+        .catch(function () {
+          if (b) b.disabled = false;
+          var f = function (n) { var e = mf.querySelector("[name=" + n + "]"); return e ? e.value.trim() : ""; };
+          var href = "mailto:" + mf.getAttribute("data-to") + "?subject=" + encodeURIComponent((mf.getAttribute("data-topic") || "Question").slice(0, 150)) +
+            "&body=" + encodeURIComponent(("Name: " + f("name") + "\nEmail: " + f("email") + "\n\n" + f("message")).slice(0, 1800));
+          st.textContent = "That didn't go through. Please try again, or ";
+          var a = document.createElement("a"); a.href = href; a.textContent = "send it by email"; st.appendChild(a);
+          st.appendChild(document.createTextNode("."));
+        });
+    });
+  });
+
   // --- contact / quote form: posted to the mdv_forms receiver, mailto as fallback ---
   var form = document.getElementById("contact-form");
   if (form) {

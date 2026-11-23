@@ -23,7 +23,7 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/css/site.css?v=113555bc01">
+<link rel="stylesheet" href="/css/site.css?v=5041d6608d">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://modvantaapps.tech/#org","name":"Modvanta","url":"https://modvantaapps.tech/","logo":"https://modvantaapps.tech/img/logo-512.png","email":"modvantaapps@gmail.com","description":"Modvanta builds Odoo modules, Shopify apps, Magento extensions, integrations and custom software.","sameAs":["https://apps.odoo.com/apps/modules/browse?author=Modvanta"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"modvantaapps@gmail.com","availableLanguage":["English"]}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"eMAG Connector","applicationCategory":"BusinessApplication","applicationSubCategory":"Connectors & integrations","operatingSystem":"Odoo 19","softwareVersion":"19.0.1.0.0","description":"eMAG Connector - eMAG Marketplace Integration - Romania, Bulgaria, Hungary","url":"https://modvantaapps.tech/odoo-apps/emag-connector/","publisher":{"@id":"https://modvantaapps.tech/#org"},"author":{"@id":"https://modvantaapps.tech/#org"},"image":"https://modvantaapps.tech/img/apps/emag-connector-800.webp","offers":{"@type":"Offer","price":"60.00","priceCurrency":"USD","url":"https://apps.odoo.com/apps/modules/19.0/mdv_emag_connector","availability":"https://schema.org/InStock"}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://modvantaapps.tech/"},{"@type":"ListItem","position":2,"name":"Odoo Apps","item":"https://modvantaapps.tech/odoo-apps/"},{"@type":"ListItem","position":3,"name":"Connectors & integrations","item":"https://modvantaapps.tech/odoo-apps/connectors/"},{"@type":"ListItem","position":4,"name":"eMAG Connector","item":"https://modvantaapps.tech/odoo-apps/emag-connector/"}]}</script>
 </head>
 <body>
@@ -46,7 +46,7 @@
 <div class="app-hero"><div><span class="eyebrow"><span class="dot"></span>Odoo eMAG integration</span>
 <h1>eMAG Connector</h1><p class="lead">eMAG Connector - eMAG Marketplace Integration - Romania, Bulgaria, Hungary</p>
 <div class="btn-row mt-2"><a class="btn btn-primary" href="https://apps.odoo.com/apps/modules/19.0/mdv_emag_connector" rel="noopener" target="_blank">View on Odoo Apps Store <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>
-<a class="btn btn-ghost" href="/contact/?app=mdv_emag_connector">Ask about customisation</a></div></div>
+<a class="btn btn-ghost" href="#ask">Ask a question</a></div></div>
 <div class="banner"><img src="/img/apps/emag-connector-800.webp" srcset="/img/apps/emag-connector-400.webp 400w, /img/apps/emag-connector-800.webp 800w" sizes="(max-width: 960px) 100vw, 520px" alt="eMAG Connector for Odoo 19" width="800" height="537" fetchpriority="high"></div></div></div></div>
 <section><div class="container layout-2">
 <div class="prose"><h2>What it does</h2><p>Run your eMAG Marketplace shop from Odoo: orders, stock, prices, AWBs and returns.</p><p>Every 15 minutes Odoo reads the eMAG orders changed since the last run. A new order becomes a sale order with the billing customer, a separate delivery address, the eMAG locality id and, for easybox orders, the locker. Cancelled lines are skipped, the eMAG shipping fee and vouchers become their own lines, and the order is acknowledged on eMAG so it moves to &quot;In progress&quot;.</p><p>Before an order is confirmed, Odoo compares its total with the eMAG total. If a product could not be matched or the totals differ by more than the tolerance you set, the order waits with a review flag and a reason. AWBs and the &quot;Finalize&quot; step are blocked until someone clears it.</p><p>Stock is the free quantity of one warehouse times a share per account, so one stock can feed eMAG Romania and eMAG Bulgaria without selling the same keyboard twice. Prices come from a pricelist, are sent without VAT with the eMAG VAT id, and stay inside the min and max price you set per offer.</p></div>
@@ -58,8 +58,15 @@
 <tr><th>Requires</th><td>sale_management, sale_stock, stock_delivery, account</td></tr>
 <tr><th>Licence</th><td>OPL-1</td></tr>
 </tbody></table>
-<div class="card"><h3>Need it adapted?</h3><p>We can extend this app for your process or connect it to your other systems.</p>
-<p class="mt-2"><a class="btn btn-primary btn-sm" href="/contact/?app=mdv_emag_connector">Get a quote</a></p></div></aside>
+<div class="card ask-card" id="ask"><h3>Ask about this app</h3>
+<p>Questions before you buy, help with setup, or a change for your business. We reply by email within one working day.</p>
+<form class="form mini-form" data-mini="app" data-topic="About eMAG Connector" data-endpoint="https://forms.179-197-253-51.sslip.io/submit" data-to="modvantaapps@gmail.com" action="mailto:modvantaapps@gmail.com" method="post" enctype="text/plain"><div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<label>Your name<input name="name" autocomplete="name" required maxlength="120"></label>
+<label>Email<input name="email" type="email" autocomplete="email" required maxlength="160"></label>
+<label>Your question<textarea name="message" required maxlength="2000" rows="4" placeholder="For example: does it work with Odoo Community? Can it also do ...?"></textarea></label>
+<button class="btn btn-primary btn-sm" type="submit">Send question <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+<p class="hint form-status" role="status" aria-live="polite"></p></form>
+<p class="ask-more">Bigger project? <a href="/request-quote/?app=eMAG%20Connector#quote">Request a quote</a></p></div></aside>
 </div></section>
 <section class="soft"><div class="container"><div class="sec-head"><h2>Related apps</h2></div>
 <div class="grid grid-4"><a class="card app-card" href="/odoo-apps/ebay-connector/"><div class="thumb"><img src="/img/apps/ebay-connector-400.webp" alt="eBay Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>eBay Connector</h3><p>Sell on eBay from Odoo - listings, orders, stock, fees and payouts in one place</p><span class="chip">Connectors &amp; integrations</span></div></a><a class="card app-card" href="/odoo-apps/ecwid-connector/"><div class="thumb"><img src="/img/apps/ecwid-connector-400.webp" alt="Ecwid Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>Ecwid Connector</h3><p>Connect your Ecwid store to Odoo - products, orders, customers, stock and coupons kept in sync</p><span class="chip">Connectors &amp; integrations</span></div></a><a class="card app-card" href="/odoo-apps/employmenthero-connector/"><div class="thumb"><img src="/img/apps/employmenthero-connector-400.webp" alt="Employment Hero Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>Employment Hero Connector</h3><p>One module that brings Employment Hero employees, leave, timesheets, payslips, rosters and documents into Odoo, with webhooks and two way leave and attendance.</p><span class="chip">Connectors &amp; integrations</span></div></a><a class="card app-card" href="/odoo-apps/etsy-connector/"><div class="thumb"><img src="/img/apps/etsy-connector-400.webp" alt="Etsy Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>Etsy Connector</h3><p>Bring your Etsy shop into Odoo: Etsy listings become products and variants matched by SKU, Etsy orders become confirmed sale orders, Odoo stock is pushed back to Etsy, and tracking numbers go to Etsy when you ship.</p><span class="chip">Connectors &amp; integrations</span></div></a></div>
@@ -78,7 +85,7 @@
 <span class="foot-legal"><a href="/privacy.html">Privacy Policy</a><a href="/license.html">Licence</a><a href="/support.html">Support</a><a href="/blog/feed.xml">RSS</a></span></div>
 <p class="foot-tm">Odoo is a trademark of Odoo S.A. Modvanta is an independent company, not affiliated with Odoo S.A.</p>
 </div></footer>
-<script src="/js/site.js?v=0c61babcfa" defer></script>
-<script src="/js/chat.js?v=4c015025c8" defer></script>
+<script src="/js/site.js?v=30d10d1a38" defer></script>
+<script src="/js/chat.js?v=6fedb66866" defer></script>
 </body>
 </html>

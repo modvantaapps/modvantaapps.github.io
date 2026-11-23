@@ -23,7 +23,7 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/css/site.css?v=113555bc01">
+<link rel="stylesheet" href="/css/site.css?v=5041d6608d">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://modvantaapps.tech/#org","name":"Modvanta","url":"https://modvantaapps.tech/","logo":"https://modvantaapps.tech/img/logo-512.png","email":"modvantaapps@gmail.com","description":"Modvanta builds Odoo modules, Shopify apps, Magento extensions, integrations and custom software.","sameAs":["https://apps.odoo.com/apps/modules/browse?author=Modvanta"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"modvantaapps@gmail.com","availableLanguage":["English"]}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Netvisor Connector","applicationCategory":"BusinessApplication","applicationSubCategory":"Connectors & integrations","operatingSystem":"Odoo 19","softwareVersion":"19.0.1.0.0","description":"Netvisor integration - Netvisor connector for Odoo 19","url":"https://modvantaapps.tech/odoo-apps/netvisor-connector/","publisher":{"@id":"https://modvantaapps.tech/#org"},"author":{"@id":"https://modvantaapps.tech/#org"},"image":"https://modvantaapps.tech/img/apps/netvisor-connector-800.webp","offers":{"@type":"Offer","price":"79.00","priceCurrency":"USD","url":"https://apps.odoo.com/apps/modules/19.0/mdv_netvisor_connector","availability":"https://schema.org/InStock"}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://modvantaapps.tech/"},{"@type":"ListItem","position":2,"name":"Odoo Apps","item":"https://modvantaapps.tech/odoo-apps/"},{"@type":"ListItem","position":3,"name":"Connectors & integrations","item":"https://modvantaapps.tech/odoo-apps/connectors/"},{"@type":"ListItem","position":4,"name":"Netvisor Connector","item":"https://modvantaapps.tech/odoo-apps/netvisor-connector/"}]}</script>
 </head>
 <body>
@@ -46,7 +46,7 @@
 <div class="app-hero"><div><span class="eyebrow"><span class="dot"></span>Odoo Netvisor integration</span>
 <h1>Netvisor Connector</h1><p class="lead">Netvisor integration - Netvisor connector for Odoo 19</p>
 <div class="btn-row mt-2"><a class="btn btn-primary" href="https://apps.odoo.com/apps/modules/19.0/mdv_netvisor_connector" rel="noopener" target="_blank">View on Odoo Apps Store <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>
-<a class="btn btn-ghost" href="/contact/?app=mdv_netvisor_connector">Ask about customisation</a></div></div>
+<a class="btn btn-ghost" href="#ask">Ask a question</a></div></div>
 <div class="banner"><img src="/img/apps/netvisor-connector-800.webp" srcset="/img/apps/netvisor-connector-400.webp 400w, /img/apps/netvisor-connector-800.webp 800w" sizes="(max-width: 960px) 100vw, 520px" alt="Netvisor Connector for Odoo 19" width="800" height="537" fetchpriority="high"></div></div></div></div>
 <section><div class="container layout-2">
 <div class="prose"><h2>What it does</h2><p>Invoice in Odoo. Netvisor books it, and Odoo hears when it is paid.</p><p>A posted invoice goes to Netvisor with the customer and product keys Netvisor gave us, the due date, a net unit price per line and the VAT code and percentage you mapped. We also send Odoo&#x27;s own line totals, so a 25.5% line that Odoo rounds one way is not rounded the other way in Netvisor. Odoo&#x27;s invoice number travels as &quot;our reference&quot;.</p><p>Netvisor numbers the invoice. When you choose Open it is booked straight away; choose Unsent if somebody sends invoices from Netvisor. On the next read the Netvisor number, the status (open, overdue, paid, in collection) and the open amount appear on the Odoo invoice, and a paid invoice can be registered as paid in Odoo too.</p><p>Credit notes go with negative quantities, as Netvisor wants them, and are matched to the invoice they credit. Customer payments you register in Odoo go to Netvisor against the right invoice, through the payment method or bank account you set per journal.</p><p>Purchase invoices that reach Netvisor (e-invoices, scanned bills) come into Odoo as draft vendor bills. The vendor is found by Business ID, the account by Netvisor&#x27;s posting suggestion, the tax by VAT code, and the PDF is attached to the bill.</p></div>
@@ -58,8 +58,15 @@
 <tr><th>Requires</th><td>mdv_account_sync_base</td></tr>
 <tr><th>Licence</th><td>OPL-1</td></tr>
 </tbody></table>
-<div class="card"><h3>Need it adapted?</h3><p>We can extend this app for your process or connect it to your other systems.</p>
-<p class="mt-2"><a class="btn btn-primary btn-sm" href="/contact/?app=mdv_netvisor_connector">Get a quote</a></p></div></aside>
+<div class="card ask-card" id="ask"><h3>Ask about this app</h3>
+<p>Questions before you buy, help with setup, or a change for your business. We reply by email within one working day.</p>
+<form class="form mini-form" data-mini="app" data-topic="About Netvisor Connector" data-endpoint="https://forms.179-197-253-51.sslip.io/submit" data-to="modvantaapps@gmail.com" action="mailto:modvantaapps@gmail.com" method="post" enctype="text/plain"><div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<label>Your name<input name="name" autocomplete="name" required maxlength="120"></label>
+<label>Email<input name="email" type="email" autocomplete="email" required maxlength="160"></label>
+<label>Your question<textarea name="message" required maxlength="2000" rows="4" placeholder="For example: does it work with Odoo Community? Can it also do ...?"></textarea></label>
+<button class="btn btn-primary btn-sm" type="submit">Send question <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+<p class="hint form-status" role="status" aria-live="polite"></p></form>
+<p class="ask-more">Bigger project? <a href="/request-quote/?app=Netvisor%20Connector#quote">Request a quote</a></p></div></aside>
 </div></section>
 <section class="soft"><div class="container"><div class="sec-head"><h2>Related apps</h2></div>
 <div class="grid grid-4"><a class="card app-card" href="/odoo-apps/naver-smartstore-connector/"><div class="thumb"><img src="/img/apps/naver-smartstore-connector-400.webp" alt="NAVER SmartStore Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>NAVER SmartStore Connector</h3><p>Run your NAVER SmartStore from Odoo: orders, tracking, stock, prices, returns, questions and settlements</p><span class="chip">Connectors &amp; integrations</span></div></a><a class="card app-card" href="/odoo-apps/netsuite-connector/"><div class="thumb"><img src="/img/apps/netsuite-connector-400.webp" alt="NetSuite Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>NetSuite Connector</h3><p>NetSuite integration - NetSuite connector for Odoo 19</p><span class="chip">Connectors &amp; integrations</span></div></a><a class="card app-card" href="/odoo-apps/nimble-connector/"><div class="thumb"><img src="/img/apps/nimble-connector-400.webp" alt="Nimble Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>Nimble Connector</h3><p>Your team keeps relationships in Nimble and runs quotes, orders and invoices in Odoo. This keeps the contacts and deals of both in step, so nobody types a customer twice.</p><span class="chip">Connectors &amp; integrations</span></div></a><a class="card app-card" href="/odoo-apps/noon-connector/"><div class="thumb"><img src="/img/apps/noon-connector-400.webp" alt="noon Connector banner" width="400" height="268" loading="lazy" decoding="async"></div><div class="body"><h3>noon Connector</h3><p>noon Connector - Odoo noon Integration - noon Marketplace UAE, KSA, Egypt</p><span class="chip">Connectors &amp; integrations</span></div></a></div>
@@ -78,7 +85,7 @@
 <span class="foot-legal"><a href="/privacy.html">Privacy Policy</a><a href="/license.html">Licence</a><a href="/support.html">Support</a><a href="/blog/feed.xml">RSS</a></span></div>
 <p class="foot-tm">Odoo is a trademark of Odoo S.A. Modvanta is an independent company, not affiliated with Odoo S.A.</p>
 </div></footer>
-<script src="/js/site.js?v=0c61babcfa" defer></script>
-<script src="/js/chat.js?v=4c015025c8" defer></script>
+<script src="/js/site.js?v=30d10d1a38" defer></script>
+<script src="/js/chat.js?v=6fedb66866" defer></script>
 </body>
 </html>

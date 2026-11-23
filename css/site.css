@@ -599,3 +599,20 @@ section.sec-tight{padding:56px 0}
 .ext-facts-wrap{margin-top:-28px;position:relative;z-index:1}
 .ext-card{content-visibility:auto;contain-intrinsic-size:auto 430px}
 .ext-card,.q-kind{min-width:0}
+
+/* app page question form + chat handoff form */
+.ask-card .mini-form{display:grid;gap:10px;margin-top:12px}
+.ask-card .mini-form label{display:grid;gap:4px;font-size:.85rem;font-weight:500;color:var(--ink)}
+.ask-card .mini-form input,.ask-card .mini-form textarea{font:inherit;font-size:.9rem;border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;
+  background:#fff;color:var(--ink);width:100%;min-width:0}
+.ask-card .mini-form input:focus,.ask-card .mini-form textarea:focus{outline:2px solid #c9d5ff;border-color:var(--blue)}
+.ask-card .mini-form .btn{justify-self:start}
+.ask-card .ask-more{font-size:.85rem;margin:12px 0 0;color:var(--muted)}
+.mini-done{background:#e6f7ea;color:#14532d;border-radius:10px;padding:12px 14px;font-size:.9rem;margin:12px 0 0}
+.mc-form{display:grid;gap:8px;margin:6px 0 10px;padding:12px;border:1px solid var(--line-2);border-radius:12px;background:#fff}
+.mc-form label{display:grid;gap:3px;font-size:.8rem;font-weight:500;color:var(--ink)}
+.mc-form input,.mc-form textarea{font:inherit;font-size:.88rem;border:1px solid var(--line-2);border-radius:8px;padding:7px 9px;min-width:0}
+.mc-form textarea{min-height:60px;resize:vertical}
+.mc-send-form{font:inherit;font-size:.85rem;font-weight:600;background:var(--blue-d);color:#fff;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;justify-self:start}
+.mc-send-form:disabled{opacity:.6}
+.mc-form-status{font-size:.8rem;margin:0;color:var(--muted)}
