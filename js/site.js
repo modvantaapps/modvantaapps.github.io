@@ -28,6 +28,25 @@
     try { navigator.sendBeacon(STATS_URL, new Blob([body.toString()], { type: "application/x-www-form-urlencoded" })); } catch (e) {}
   })();
 
+  // --- what visitors search for (search text, result count, which box; nothing about the visitor) ---
+  var SEARCH_LOG_URL = "https://forms.179-197-253-51.sslip.io/search";
+  var logTimer = null, lastLogged = "";
+  function logSearch(q, n, where) {
+    clearTimeout(logTimer);
+    q = (q || "").trim().toLowerCase().replace(/\s+/g, " ").slice(0, 80);
+    if (q.length < 2) return;
+    logTimer = setTimeout(function () {
+      if (q === lastLogged || navigator.doNotTrack === "1" || !navigator.sendBeacon || location.hostname !== "modvantaapps.tech") return;
+      lastLogged = q;
+      var clean = q.replace(/[^\s@]+@[^\s@]+/g, "[email]").replace(/\d[\d\s().-]{6,}\d/g, "[number]");
+      var body = new URLSearchParams();
+      body.set("q", clean); body.set("n", String(Math.min(n, 99999))); body.set("w", where);
+      body.set("p", location.pathname.slice(0, 200));
+      body.set("d", window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? "m" : "d");
+      try { navigator.sendBeacon(SEARCH_LOG_URL, new Blob([body.toString()], { type: "application/x-www-form-urlencoded" })); } catch (e) {}
+    }, 1500);
+  }
+
   function norm(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 
   function card(app) {
@@ -83,6 +102,7 @@
         var words = q.split(/\s+/);
         var hits = all.filter(function (x) { return words.every(function (w) { return x._k.indexOf(w) !== -1; }) && (!selectedGroup || norm(x.g) === selectedGroup); });
         status.textContent = hits.length + (hits.length === 1 ? " app found" : " apps found");
+        if (q.length >= 2) logSearch(search.value, hits.length, "apps");
         var grid = document.createElement("div");
         grid.className = "grid";
         hits.slice(0, 60).forEach(function (x) { grid.appendChild(card(x)); });
@@ -124,6 +144,73 @@
   }
 
 
+  // --- site-wide search page (/search/) ---
+  var siteSearch = document.getElementById("site-search");
+  if (siteSearch) {
+    var siteOut = document.getElementById("site-results"), siteStatus = document.getElementById("site-status");
+    var siteEmpty = document.getElementById("site-empty"), siteData = null, siteTimer = null;
+    var loadSite = function () {
+      if (siteData) return Promise.resolve(siteData);
+      var get = function (u) { return fetch(u, { credentials: "same-origin" }).then(function (r) { return r.json(); }); };
+      return Promise.all([get("/data/search.json"), get("/data/pages.json")]).then(function (res) {
+        var apps = res[0].map(function (x) { return { n: x.n, t: x.t, g: "Odoo app", c: x.g, u: x.u, k: x.k }; });
+        siteData = apps.concat(res[1]).map(function (x) {
+          x._n = norm(x.n); x._k = norm(x.n + " " + x.t + " " + (x.c || "") + " " + x.g + " " + (x.k || "")); return x;
+        });
+        return siteData;
+      });
+    };
+    var ORDER = ["Service", "Solution", "Odoo app", "Integration", "Localization", "App category", "Industry",
+                 "Magento 2 extension", "Shopify app", "Page"];
+    var LABEL = { "Service": "Services", "Solution": "Business solutions", "Odoo app": "Odoo apps",
+                  "Integration": "Integrations", "Localization": "Localization by country", "App category": "App categories",
+                  "Industry": "Industries", "Magento 2 extension": "Magento 2 extensions", "Shopify app": "Shopify apps", "Page": "Pages" };
+    var item = function (x) {
+      var a = document.createElement("a"); a.className = "sr-item"; a.href = x.u;
+      var b = document.createElement("b"); b.textContent = x.n;
+      var sp = document.createElement("span"); sp.textContent = x.t;
+      a.appendChild(b); a.appendChild(sp); return a;
+    };
+    var siteRun = function () {
+      var raw = siteSearch.value.trim(), q = norm(raw), words = q.split(/\s+/).filter(Boolean);
+      while (siteOut.firstChild) siteOut.removeChild(siteOut.firstChild);
+      siteEmpty.hidden = true;
+      if (q.length < 2) { siteStatus.textContent = ""; return; }
+      loadSite().then(function (all) {
+        var hits = all.filter(function (x) { return words.every(function (w) { return x._k.indexOf(w) !== -1; }); });
+        hits.sort(function (a, b) {
+          var sa = (a._n.indexOf(q) !== -1 ? 0 : 1), sb = (b._n.indexOf(q) !== -1 ? 0 : 1);
+          return sa - sb;
+        });
+        siteStatus.textContent = hits.length ? hits.length + (hits.length === 1 ? " result" : " results") : "";
+        siteEmpty.hidden = hits.length > 0;
+        ORDER.forEach(function (g) {
+          var list = hits.filter(function (x) { return x.g === g; });
+          if (!list.length) return;
+          var sec = document.createElement("div"); sec.className = "sr-group";
+          var h = document.createElement("h2"); h.textContent = LABEL[g] + " (" + list.length + ")";
+          var box = document.createElement("div"); box.className = "sr-list";
+          list.slice(0, g === "Odoo app" ? 20 : 8).forEach(function (x) { box.appendChild(item(x)); });
+          sec.appendChild(h); sec.appendChild(box);
+          if (g === "Odoo app" && list.length > 20) {
+            var more = document.createElement("a"); more.className = "sr-more";
+            more.href = "/odoo-apps/?q=" + encodeURIComponent(raw); more.textContent = "See all " + list.length + " Odoo apps";
+            sec.appendChild(more);
+          }
+          siteOut.appendChild(sec);
+        });
+        logSearch(raw, hits.length, "site");
+      }).catch(function () { siteStatus.textContent = "Search is unavailable right now. Browse the apps instead."; });
+    };
+    siteSearch.addEventListener("input", function () {
+      clearTimeout(siteTimer); siteTimer = setTimeout(siteRun, 150);
+      try { history.replaceState(null, "", siteSearch.value.trim() ? "?q=" + encodeURIComponent(siteSearch.value.trim()) : location.pathname); } catch (e) {}
+    });
+    siteSearch.form.addEventListener("submit", function (e) { e.preventDefault(); siteRun(); });
+    var siteQ = new URLSearchParams(location.search).get("q");
+    if (siteQ) { siteSearch.value = siteQ.slice(0, 80); siteRun(); } else { siteSearch.focus(); }
+  }
+
   // --- Magento / Shopify catalogue: search + category chips ---
   var extSearch = document.getElementById("ext-search");
   if (extSearch) {
@@ -141,6 +228,7 @@
       });
       extStatus.textContent = shown ? "Showing " + shown + " of " + extCards.length + "." :
         "Nothing matches. Try another word, or request a quote for a custom build.";
+      if (words.length) logSearch(extSearch.value, shown, location.pathname.indexOf("/shopify") === 0 ? "shopify" : "magento");
     };
     extBtns.forEach(function (b) {
       b.addEventListener("click", function () {
@@ -151,6 +239,8 @@
     });
     var extTimer = null;
     extSearch.addEventListener("input", function () { clearTimeout(extTimer); extTimer = setTimeout(extRun, 100); });
+    var extQ = new URLSearchParams(location.search).get("q");
+    if (extQ) { extSearch.value = extQ.slice(0, 80); extRun(); }
   }
 
   // --- short "ask about this app" forms: same receiver, mailto fallback ---
