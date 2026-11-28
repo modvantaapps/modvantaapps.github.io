@@ -640,3 +640,15 @@ section.sec-tight{padding:56px 0}
 .mc-form-status{font-size:.8rem;margin:0;color:var(--muted)}
 .chip.chip-mto{background:#fff7e6;border-color:#f5d38a;color:#8a5a00;font-weight:600}
 .ext-card.is-mto{border-style:dashed}
+/* extension pages */
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:12px 0 8px}
+.shots figure{margin:0}
+.shots img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shots figcaption{font-size:.82rem;color:var(--muted,#5b6478);margin-top:6px}
+.ext-hero-price{margin:10px 0 0;font-size:1.05rem}
+.ext-hero-price b{font-size:1.6rem;color:var(--navy)}
+.ext-card h3 a{color:inherit;text-decoration:none}
+.ext-card h3 a:hover{text-decoration:underline}
+@media (max-width:640px){.shots{grid-template-columns:1fr}}
+.layout-2>.prose{min-width:0}
+.prose pre code{background:none;padding:0;color:inherit;border:0;font-size:inherit}
